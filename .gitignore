@@ -33,3 +33,6 @@ out/
 # 教材
 src/answer/
 src/exercises/
+
+# テンプレート
+src/study/FE/template*.md
