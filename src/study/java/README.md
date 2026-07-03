@@ -309,10 +309,64 @@ src/study/java/day08_20260627
 ```
 
 ---
+---
+
+### Day09（2026/07/03）
+ファイル操作・CSV読み込み
+
+#### 学習内容
+
+* File
+* FileWriter
+* FileReader
+* BufferedReader
+* try-with-resources
+* IOException
+* Files
+* StandardCharsets
+* UTF-8指定読み込み
+* CSVファイル読み込み
+* split()
+* ヘッダー行のスキップ
+* 列数チェック
+* 型チェック
+* HashSetによる重複チェック
+
+#### 実装した機能
+
+* ファイルの存在確認
+* ファイル名・絶対パスの取得
+* テキストファイルの作成
+* テキストファイルへの書き込み
+* テキストファイルの読み込み
+* try-with-resourcesによる自動クローズ
+* UTF-8を指定したCSV読み込み
+* CSVデータの列分割
+* ヘッダー行のスキップ
+* 不正な列数の検出
+* 数値変換による型チェック
+* HashSetを使った重複チェック
+
+#### 学んだこと
+
+JavaではFileクラスを使ってファイルの存在確認やパス取得ができることを学んだ。
+
+また、FileWriter・FileReader・BufferedReaderを使ったテキストファイルの読み書きや、try-with-resourcesによってclose()を自動実行できることを理解した。
+
+CSV読み込みでは、FileReaderでは文字コードを明示できず文字化けする可能性があるため、Files.newBufferedReader()とStandardCharsets.UTF_8を使って文字コードを指定する重要性を学んだ。
+
+さらに、split()による列分割、ヘッダー行のスキップ、列数チェック、Integer.parseInt()による型チェック、HashSetによる重複チェックを実装し、CSV検証処理の基本的な流れを理解した。
+
+現在Excel VBAで作成しているCSV集計ツールを、将来的にJavaで再実装するための基礎となる内容を学習した。
+
+#### フォルダ
+
+```text
+src/study/java/day09_20260703
+```
 
 ## 今後学習予定
 
-- Day09：ファイル操作
 - Day10：簡単なアプリ作成
 
 ---
