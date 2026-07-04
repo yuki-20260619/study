@@ -239,9 +239,28 @@ Public Sub AddDataCopy(ByRef myArray As Variant, ByRef AddData As Variant, ByRef
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     On Error GoTo ErrorHandler
     
-    '// E001`E003ƒGƒ‰[ŒŸ’m
+    '// ³‹K‚Ìƒf[ƒ^‚ğ’è‹`
     'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Call PrepareCheck(cls04, errorLog, processLog, myArray, startTime)
+    Dim dicFormalData As Dictionary
+    Set dicFormalData = CreateObject("ScriptDictionary")
+    
+    With dicFormalData
+        .Add sales.“`•[”Ô†, Array("“`•[”Ô†", sales.“`•[”Ô†, vbString, "•K{")
+        .Add sales.“ú•t, Array("“ú•t", sales.“ú•t, vbDate, "•K{")
+        .Add sales.ŠÔ, Array("ŠÔ", sales.ŠÔ, vbDate, "•K{")
+        .Add sales.ƒe[ƒuƒ‹”Ô†, Array("ƒe[ƒuƒ‹”Ô†", sales.ƒe[ƒuƒ‹”Ô†, vbInteger, "•K{")
+        .Add sales.—ˆ‹q”, Array("—ˆ‹q”", sales.—ˆ‹q”, vbInteger, "•K{")
+        .Add sales.¤•i–¼, Array("¤•i–¼", sales.¤•i–¼, vbString, "•K{")
+        .Add sales.ƒJƒeƒSƒŠ, Array("ƒJƒeƒSƒŠ", sales.ƒJƒeƒSƒŠ, vbString, "•K{")
+        .Add sales.”—Ê, Array("”—Ê", sales.”—Ê, vbInteger, "•K{")
+        .Add sales.’P‰¿, Array("’P‰¿", sales.’P‰¿, vbCurrency, "•K{")
+        .Add sales.”„ã‹àŠz, Array("”„ã‹àŠz", sales.”„ã‹àŠz, vbCurrency, "•K{")
+        .Add sales.x•¥•û–@, Array("x•¥•û–@", sales.x•¥•û–@, vbString, "•K{")
+    End With
+    
+    '// E002`E003ƒGƒ‰[ŒŸ’m
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Call PrepareCheck(cls04, errorLog, processLog, myArray, dicFormalData, startTime)
     
     '// ‘ƒŒƒR[ƒh”‚ğæ“¾
     'PPPPPPPPPPPPPPPPPPPPPPPPP
@@ -269,7 +288,7 @@ Public Sub AddDataCopy(ByRef myArray As Variant, ByRef AddData As Variant, ByRef
         Call GetHistoricalData(historicalData, fatalCheck, transactionYear, dicExistData)
         
         '// myArray“à‚Ìæˆø‘ÎÛ”N‚Ìæˆø‚ªAŠù‘¶ƒf[ƒ^“à‚É‘¶İ‚µ‚È‚¢‚©”»’f‚·‚é
-        Call IsExistsData(cls04, errorLog, processLog, myArray, dicExistData, transactionYear, totalRecord, startTime)
+        Call IsExistsData(cls04, errorLog, processLog, myArray, dicExistData, dicFormalData, transactionYear, totalRecord, startTime)
         
     Next i
 
@@ -281,6 +300,7 @@ EndLabel:
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     Set ws = Nothing
     Set dicExistData = Nothing
+    Set dicFormalData = Nothing
     Erase readYear
     Erase historicalData
     
@@ -294,37 +314,26 @@ ErrorHandler:
     Err.Raise Err.Number, , Err.Description
 End Sub
 Public Sub PrepareCheck(ByRef cls04 As Cls4_Log, ByRef errorLog As Variant, ByRef processLog As Variant, ByRef myArray As Variant, _
-                                    ByVal startTime As Double)
+                                    ByRef dicFormalData As Dictionary, ByVal startTime As Double)
     '// —\Šú‚¹‚ÊƒGƒ‰[ŒŸ’m
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     On Error GoTo ErrorHandler
     
-    '// ƒJƒ‰ƒ€–¼‚ğİ’è‚·‚é
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Dim colName(sales.endCol) As String
-    
-    colName(sales.“`•[”Ô†) = "“`•[”Ô†"
-    colName(sales.“ú•t) = "“ú•t"
-    colName(sales.ŠÔ) = "ŠÔ"
-    colName(sales.ƒe[ƒuƒ‹”Ô†) = "ƒe[ƒuƒ‹”Ô†"
-    colName(sales.—ˆ‹q”) = "—ˆ‹q”"
-    colName(sales.¤•i–¼) = "¤•i–¼"
-    colName(sales.ƒJƒeƒSƒŠ) = "ƒJƒeƒSƒŠ"
-    colName(sales.”—Ê) = "”—Ê"
-    colName(sales.’P‰¿) = "’P‰¿"
-    colName(sales.”„ã‹àŠz) = "”„ã‹àŠz"
-    colName(sales.x•¥•û–@) = "x•¥•û–@"
-    
     '// ƒJƒ‰ƒ€–¼‚Ì‘Šˆá‚ª‚È‚¢‚©”»’f‚·‚é
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     Dim i As Long
-    Dim checkCol As String
-    Dim targetContent As String
+    Dim checkColName As String
+    Dim targetContent As String    '// ƒGƒ‰[‘ÎÛ‚ÌƒJƒ‰ƒ€–¼
+    Dim getInfo As Variant           '// ƒJƒ‰ƒ€–¼ / —ñ”Ô† / Œ^ / •K{
+    Dim getFormalColName As String
     
     For i = LBound(myArray, 1) To UBound(myArray, 1) Step 1
-        checkCol = myArray(i, LBound(myArray, 2))
-        If checkCol <> colName(i) Then
-            targetContent = checkCol
+        checkColName = myArray(i, LBound(myArray, 2))   '// ‘ÎÛƒJƒ‰ƒ€‚Ìƒ`ƒFƒbƒNƒf[ƒ^‚ğæ“¾
+        getInfo = dicFormalData(i + 1)                               '// ‘ÎÛƒJƒ‰ƒ€‚Ì³‹Kƒf[ƒ^‚ğæ“¾
+        getFormalColName = getInfo(0)
+        
+        If checkColName <> getFormalColName Then
+            targetContent = checkColName
             GoTo E002 '// ƒJƒ‰ƒ€–¼‚ªˆê’v‚µ‚È‚¢ê‡
         End If
     Next i
@@ -495,7 +504,7 @@ ErrorHandler:
     Err.Raise Err.Number, , Err.Description
 End Sub
 Public Sub IsExistsData(ByRef cls04 As Cls4_Log, ByRef errorLog As Variant, ByRef processLog As Variant, ByRef myArray As Variant, _
-                                  ByRef dicExistData As Dictionary, ByVal targetYear As Long, ByVal totalRecord As Long, ByVal startTime As Double)
+                                  ByRef dicExistData As Dictionary, ByRef dicFormalData As Dictionary, ByVal targetYear As Long, ByVal totalRecord As Long, ByVal startTime As Double)
     '// —\Šú‚¹‚ÊƒGƒ‰[ŒŸ’m
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     On Error GoTo ErrorHandler
@@ -511,31 +520,13 @@ Public Sub IsExistsData(ByRef cls04 As Cls4_Log, ByRef errorLog As Variant, ByRe
         commonLogArray(4) = totalRecord      '// ƒŒƒR[ƒh”
     End With
     
-    '// ƒf[ƒ^‚ÌŒ^‚ğ’è‹`
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Dim expectedTypes As Dictionary
-    Set expectedTypes = CreateObject("Scripting.Dictionary")
-    
-    With expectedTypes
-        .Add sales.“`•[”Ô†, vbString
-        .Add sales.“ú•t, vbDate
-        .Add sales.ŠÔ, vbDate
-        .Add sales.ƒe[ƒuƒ‹”Ô†, vbInteger
-        .Add sales.—ˆ‹q”, vbInteger
-        .Add sales.¤•i–¼, vbString
-        .Add sales.ƒJƒeƒSƒŠ, vbString
-        .Add sales.”—Ê, vbInteger
-        .Add sales.’P‰¿, vbCurrency
-        .Add sales.”„ã‹àŠz, vbCurrency
-        .Add sales.x•¥•û–@, vbString
-    End With
-    
     '// ‘ÎÛ‚Ìƒf[ƒ^‚ªŠù‘¶ƒf[ƒ^‚É‘¶İ‚µ‚È‚¢‚©”»’f
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     Dim dicAddData As Dictionary
     Set dicAddData = CreateObject("Scripting.Dictionary")
     Dim items() As Variant
     Dim key As String
+    Dim getInfo As Variant '// ƒJƒ‰ƒ€–¼ / —ñ”Ô† / Œ^ / •K{
     Dim i As Long
     Dim j As Long
     Dim readRows As Long: readRows = 0
@@ -547,8 +538,11 @@ Public Sub IsExistsData(ByRef cls04 As Cls4_Log, ByRef errorLog As Variant, ByRe
         ReDim items(UBound(myArray, 1))
         
         For j = LBound(myArray, 1) To UBound(myArray, 1) Step 1 '// —ñ‚ğƒ‹[ƒv
+            '// ³‹Kƒf[ƒ^‚ğ’è‹`
+            getInfo = dicFormalData(j + 1)
+            
             '// ƒf[ƒ^‚ÌŒ^‚ªˆê’v‚µ‚Ä‚¢‚é‚©”»’f
-            If Not IsExpectedType(myArray(j, i), expectedTypes(j)) Then
+            If Not IsExpectedType(myArray(j, i), getInfo(2)) Then
                 errorRows = errorRows + 1
                 errorRow = i + 1
                 GoTo E004
