@@ -17,6 +17,8 @@ Private Enum sales
     endCol = x•¥•û–@
 End Enum
 Public Sub ReadMain()
+    '// •Ï”‚ğéŒ¾
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
     Dim cls01 As Cls1_setting
     Dim cls02 As Cls2_csv
     Dim cls03 As Cls3_fso
@@ -25,9 +27,23 @@ Public Sub ReadMain()
     Set cls02 = New Cls2_csv
     Set cls03 = New Cls3_fso
     Set cls04 = New Cls4_Log
+    
     Dim errorLog() As Variant '// ƒGƒ‰[ƒƒO
+    Dim errorRows As Long: errorRows = 0 '// ƒGƒ‰[Œ”
     Dim processLog() As Variant '// ˆ—ƒƒO
+    Dim totalRecord As Long '// ‘ƒŒƒR[ƒh”
+    Dim readRows As Long: readRows = 0 '// “ÇŒ”
+    
     Dim readCsv() As Variant '// “Çcsv
+    Dim addData As Variant '// ’Ç‰Áƒf[ƒ^
+    
+    Dim dicFormalData As Dictionary
+    Set dicFormalData = CreateObject("ScriptDictionary")
+    Dim dicExistData As Dictionary
+    Set dicExistData = CreateObject("Scripting.Dictionary")
+    Dim dicAddData As Dictionary
+    Set dicAddData = CreateObject("Scripting.Dictionary")
+    
     Dim fatalCheck As Boolean: fatalCheck = False
     
     '// —\Šú‚¹‚ÊƒGƒ‰[ŒŸ’m
@@ -45,9 +61,6 @@ Public Sub ReadMain()
     
     '// ³‹K‚Ìƒf[ƒ^‚ğ’è‹`
     'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Dim dicFormalData As Dictionary
-    Set dicFormalData = CreateObject("ScriptDictionary")
-    
     Call DefineFormalData
     
     ' // ƒƒOì¬
@@ -55,60 +68,19 @@ Public Sub ReadMain()
     Call CreateErrorCol(errorLog) '// ƒGƒ‰[ƒƒOFƒJƒ‰ƒ€ì¬
     Call CreateProcessCol(processLog) '// ˆ—ƒƒOFƒJƒ‰ƒ€ì¬
     
-    '// ƒtƒ@ƒCƒ‹î•ñ‚ğæ“¾‚·‚é
+    '// ƒtƒHƒ‹ƒ_î•ñ‚ğæ“¾‚·‚é
     'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Dim openFolderpath As String
+    Dim openFolderPath As String
     Dim filePaths As Variant '// ‘I‘ğ‚µ‚½ƒtƒ@ƒCƒ‹
+
+    Call RunGetFolderPath(openFolderPath, filePaths)
     
-    Call GetFolderPath(openFolderpath) '// ƒtƒHƒ‹ƒ_î•ñ‚ğæ“¾‚·‚é
-    If IsFolderExist(openFolderpath) = False Then '// ƒtƒHƒ‹ƒ_‚Ì‘¶İƒ`ƒFƒbƒN
-        '// F001
-        fatalCheck = True '// ƒtƒ‰ƒO‚ğ•ÏX
-    End If
-    
-    If cls03.IsFilePath(filePaths, openFolderpath) = False Then '// ƒtƒ@ƒCƒ‹‚ğ‘I‘ğ‚·‚é
-        ' // F002
-        fatalCheck = True '// ƒtƒ‰ƒO‚ğ•ÏX
-    End If
+    If fatalCheck = True Then GoTo fatalError
     
      '// ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
     'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Dim i As Long
-    Dim j As Long
-    Const charCode As String = "UTF-8" '// ˆµ‚¤•¶šƒR[ƒh
-    Dim filePath As String
-    Dim totalRecord As Long '// ‘ƒŒƒR[ƒh”
-    Dim readYear As Variant
-    Dim targetYear As String
-    Dim existData As Variant '// Šù‘¶ƒf[ƒ^
-    Dim AddData() As Variant '// ’Ç‰Áƒf[ƒ^
-    
-    For i = LBound(filePaths) To UBound(filePaths) Step 1
-        Erase myArray '// ”z—ñ‚ğ‰Šú‰»
-        filePath = filePaths(i)
-        
-        With cls02
-            If .IsCharCode(filePaths(i), charCode) = fale Then   '// •¶šƒR[ƒh‚ğ”»’f‚·‚é
-                '// E001 '// •¶šƒR[ƒh‚ªˆê’v‚µ‚È‚©‚Á‚½ê‡
-            Else
-                Call .CsvReading(filePath, charCode, readCsv) '// csv‚ğ”z—ñ‚ÉŠi”[‚·‚é
-                totalRecord = UBound(myArray, 2) + 1 '// ‘ƒŒƒR[ƒh”‚ğæ“¾
-                Call GetTransactionYear(filePath, readYear, readCsv) '// csvƒtƒ@ƒCƒ‹“à‚Ìæˆø”N‚ğæ“¾
-                
-                For j = LBound(readYear) To UBound(readYear) Step 1
-                    targetYear = readYear(j)
-                    
-                    If IsWorksheetExist(targetYear) = False Then '// ‘ÎÛ‚ÌƒV[ƒg‚ª‘¶İ‚·‚é‚©
-                        Call WsAddTargetYear(targetYear) '// ‘ÎÛ”N‚ÌƒV[ƒg‚ğì¬‚·‚é
-                    End If
-                    
-                    '// æˆø”N‚ÌŠù‘¶ƒf[ƒ^‚ğæ“¾‚·‚é
-                Next j
-            End If
-        End With
-    Next i
-    
-    If fatalCheck = True Then GoTo fatalError
+    Call RunReadCsvFile(cls02, filePaths, readCsv, readYear, dicFormalData)
+
 ProcessComplete:
     '// ˆ—ƒŒƒ|[ƒgEƒGƒ‰[ƒŒƒ|[ƒg‚ğo—Í‚·‚é
     'PPPPPPPPPPPPPPPPPPPPPPPPP
@@ -134,8 +106,8 @@ ProcessComplete:
     Set dicFormalData = Nothing
     Erase errorLog '// ƒGƒ‰[ƒƒO
     Erase processLog '// ˆ—ƒƒO
-    Erase myArray '// “Çcsv
-    Erase AddData '// ’Ç‰Áƒf[ƒ^
+    Erase readCsv '// “Çcsv
+    Erase addData '// ’Ç‰Áƒf[ƒ^
     
     '// I—¹
     'PPPPPPPPPPPPPPPPPPPPPPPPP
@@ -157,7 +129,7 @@ End Sub
 '// ------------------------------------------------------------------
 '  ³‹K‚Ìƒf[ƒ^‚ğ’è‹`
 '// ------------------------------------------------------------------
-Public Sub DefineFormalData(ByRef dicFormalData As Dictionary)
+Public Sub GetFormalData(ByRef dicFormalData As Dictionary)
     '// —\Šú‚¹‚ÊƒGƒ‰[ŒŸ’m
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     On Error GoTo ErrorHandler
@@ -186,10 +158,42 @@ ErrorHandler:
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     Err.Raise Err.Number, , Err.Description
 End Sub
+
+
+
 '// ------------------------------------------------------------------
 '  ƒtƒHƒ‹ƒ_î•ñ‚ğæ“¾‚·‚é
 '// ------------------------------------------------------------------
-Public Sub GetFolderPath(ByRef openFolderpath As String)
+Public Sub RunGetFolderPath(ByVal openFolderPath As String, byreffilePaths As Variant)
+    '// —\Šú‚¹‚ÊƒGƒ‰[ŒŸ’m
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    On Error GoTo ErrorHandler
+    
+    '// ƒtƒHƒ‹ƒ_î•ñ‚ğæ“¾‚·‚é
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Call GetFolderPath(openFolderPath)
+    
+    '// ƒtƒHƒ‹ƒ_‚Ì‘¶İƒ`ƒFƒbƒN
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    If IsFolderExist(openFolderPath) = False Then
+        '// F001
+        fatalCheck = True '// ƒtƒ‰ƒO‚ğ•ÏX
+    End If
+    
+    If cls03.IsFilePath(filePaths, openFolderPath) = False Then '// ƒtƒ@ƒCƒ‹‚ğ‘I‘ğ‚·‚é
+        ' // F002
+        fatalCheck = True '// ƒtƒ‰ƒO‚ğ•ÏX
+    End If
+
+    '// sub‚ğ”²‚¯‚é
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Exit Sub
+ErrorHandler:
+    '// ”­¶‚µ‚½ƒGƒ‰[‚ğŒÄ‚Ño‚µŒ³‚É“Š‚°‚é
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Err.Raise Err.Number, , Err.Description
+End Sub
+Public Sub GetFolderPath(ByRef openFolderPath As String)
     '// —\Šú‚¹‚ÊƒGƒ‰[ŒŸ’m
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     On Error GoTo ErrorHandler
@@ -203,13 +207,13 @@ Public Sub GetFolderPath(ByRef openFolderpath As String)
         Set wsh = CreateObject("WScript.Shell")
         
         '// w’èƒtƒHƒ‹ƒ_‚ª–³‚¢ê‡‚Íƒ}ƒCƒhƒLƒ…ƒƒ“ƒg‚ğw’è
-        openFolderpath = wsh.SpecialFolders("MyDocuments")
+        openFolderPath = wsh.SpecialFolders("MyDocuments")
         
         '// Œãn––
         Set wsh = Nothing
     Else
         '// w’èƒtƒHƒ‹ƒ_‚ğæ“¾
-        openFolderpath = SH_Setting.Range(InputCell)
+        openFolderPath = SH_Setting.Range(InputCell)
     End If
        
     '// sub‚ğ”²‚¯‚é
@@ -220,24 +224,21 @@ ErrorHandler:
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     Err.Raise Err.Number, , Err.Description
 End Sub
-'// ------------------------------------------------------------------
-'  ƒtƒHƒ‹ƒ_‚Ì‘¶İƒ`ƒFƒbƒN
-'// ------------------------------------------------------------------
-Public Function IsFolderExist(ByVal openFolderpath As String) As Boolean
+Public Function IsFolderExist(ByVal openFolderPath As String) As Boolean
     '// —\Šú‚¹‚ÊƒGƒ‰[ŒŸ’m
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     On Error GoTo ErrorHandler
     
     '// ‹¤’ÊƒƒO‚ğæ“¾
     'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Call GetCommonLog(cls04, openFolderpath)
+    Call GetCommonLog(cls04, openFolderPath)
     
     '// ƒtƒHƒ‹ƒ_‚Ì‘¶İ‚ğŠm”F‚·‚é
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     Dim filePaths As Variant
     IsFolderExist = True
     
-    If Dir(openFolderpath, vbDirectory) = "" Then
+    If Dir(openFolderPath, vbDirectory) = "" Then
         IsFolderExist = False '// w’èƒtƒHƒ‹ƒ_‚ª‘¶İ‚µ‚È‚¢ê‡
     End If
     
@@ -250,16 +251,64 @@ ErrorHandler:
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     Err.Raise Err.Number, , Err.Description
 End Function
+
+
+
+
 '// ------------------------------------------------------------------
 '  csvƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
 '// ------------------------------------------------------------------
-Public Sub ReadCsvFile(ByRef filePaths As Variant)
+Public Sub RunReadCsvFile(ByRef cls02 As Cls2_csv, ByRef filePaths As Variant, ByRef readCsv As Variant, ByRef readYear As Variant, ByRef dicFormalData As Dictionary)
     '// —\Šú‚¹‚ÊƒGƒ‰[ŒŸ’m
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     On Error GoTo ErrorHandler
     
-    '// ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
+    '// csvƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
     'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Dim filePath As Variant
+    
+    For Each filePath In filePaths
+        Call ReadOneCsv(cls02, filePath, readCsv)
+    Next
+
+ErrorHandler:
+    '// ”­¶‚µ‚½ƒGƒ‰[‚ğŒÄ‚Ño‚µŒ³‚É“Š‚°‚é
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Err.Raise Err.Number, , Err.Description
+End Sub
+Public Sub ReadOneCsv(ByRef cls02 As Cls2_csv, ByRef filePath As Variant, ByRef readCsv As Variant, _
+                                  ByRef dicFormalData As Dictionary, ByRef dicExistData As Dictionary)
+    '// —\Šú‚¹‚ÊƒGƒ‰[ŒŸ’m
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    On Error GoTo ErrorHandler
+    
+    '// •Ï”éŒ¾
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Const charCode As String = "UTF-8" '// ˆµ‚¤•¶šƒR[ƒh
+    
+    With cls02
+        '// •¶šƒR[ƒh‚ªˆê’v‚µ‚Ä‚¢‚é‚©”»’f‚·‚é
+        'PPPPPPPPPPPPPPPPPPPPPPPPP
+        If .IsCharCode(filePaths(fileCount), charCode) = False Then
+            '// E001 '// •¶šƒR[ƒh‚ªˆê’v‚µ‚È‚©‚Á‚½ê‡
+            Exit Sub
+        End If
+        
+        '// csv‚ğ“Ç‚İ‚Ş
+        'PPPPPPPPPPPPPPPPPPPPPPPPP
+        Call .CsvReading(filePath, charCode, readCsv)
+    End With
+    
+    '// ƒwƒbƒ_[Šm”F
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    If IsExpectedColumnsName(dicFormalData, readCsv) = False Then
+        '// E002
+        Exit Sub
+    End If
+    
+    '// ğŒ‚ğ–‚½‚µ‚½ƒf[ƒ^‚ğæ‚è‚Ş
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Call GetImportData(readCsv, readYear, dicExistData)
     
 ErrorHandler:
     '// ”­¶‚µ‚½ƒGƒ‰[‚ğŒÄ‚Ño‚µŒ³‚É“Š‚°‚é
@@ -267,28 +316,118 @@ ErrorHandler:
     Err.Raise Err.Number, , Err.Description
 End Sub
 '// ------------------------------------------------------------------
-'  csvƒtƒ@ƒCƒ‹“à‚Ìæˆø”N‚ğæ“¾
+'  ƒwƒbƒ_[Šm”F
 '// ------------------------------------------------------------------
-Public Sub GetTransactionYear(ByVal filePath As String, ByRef readYear As Variant, ByRef readCsv As Variant)
+Public Function IsExpectedColumnsName(ByRef dicFormalData As Dictionary, ByRef readCsv As Variant) As Boolean
     '// —\Šú‚¹‚ÊƒGƒ‰[ŒŸ’m
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     On Error GoTo ErrorHandler
     
-    '// myArray“à‚Ìæˆø”N‚ğ‚·‚×‚Äæ“¾
+    '// ƒJƒ‰ƒ€–¼‚ªˆê’v‚µ‚Ä‚¢‚é‚©”»’f‚·‚é
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    IsExpectedColumnsName = True
+    Dim i As Long
+    Dim getInfo As Variant
+    
+    For i = LBound(readCsv, 1) To UBound(readCsv, 1) Step 1
+        Erase getInfo
+        getInfo = dicFormalData(i)
+        
+        If readCsv(i, LBound(readCsv, 2)) = getInfo(0) Then
+            IsExpectedColumnsName = False
+        End If
+    Next i
+
+    '// sub‚ğ”²‚¯‚é
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Exit Function
+ErrorHandler:
+    '// ”­¶‚µ‚½ƒGƒ‰[‚ğŒÄ‚Ño‚µŒ³‚É“Š‚°‚é
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Err.Raise Err.Number, , Err.Description
+    
+End Function
+'// ------------------------------------------------------------------
+'  ƒtƒ@ƒCƒ‹‚ğ‚P‚Â‚¸‚Âæ“¾‚·‚é
+'// ------------------------------------------------------------------
+Public Sub GetImportData(ByRef readCsv As Variant, ByRef readYear As Variant, dicExistData As Dictionary)
+    '// —\Šú‚¹‚ÊƒGƒ‰[ŒŸ’m
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    On Error GoTo ErrorHandler
+    
+    '// •Ï”‚ğéŒ¾
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Dim targetYear As Variant
+    
+    '// æˆø”N‚ğæ“¾
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Call GetBusinessYears(readCsv, readYear, dicExistData)
+    
+    For Each targetYear In readYear
+        '// Šù‘¶ƒf[ƒ^‚ÌƒV[ƒg‚ª‘¶İ‚·‚é‚©”»’f
+        'PPPPPPPPPPPPPPPPPPPPPPPPP
+        If IsWorksheetExist(targetYear) = False Then
+            Call WsAddTargetYear(targetYear) '//ƒV[ƒg‚ğì¬‚·‚é
+        End If
+        
+        '// Šù‘¶ƒf[ƒ^‚ğæ“¾‚·‚é
+        'PPPPPPPPPPPPPPPPPPPPPPPPP
+        Call GetTargetYearExistData(dicExistData, targetYear)
+        
+        '// ğŒ‚ğ–‚½‚·ƒf[ƒ^‚ğæ“¾‚·‚é
+        'PPPPPPPPPPPPPPPPPPPPPPPPP
+        If IsConditionsData(dicExistData, dicAddData, _
+                                    readCsv, getYear, addData) = False Then
+            '// ƒGƒ‰[ƒŒƒR[ƒhXV
+        Else
+            '// “ÇƒŒƒR[ƒhXV
+        End If
+    Next
+    '// Œãn––
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    
+    
+    '// sub‚ğ”²‚¯‚é
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Exit Sub
+    
+ErrorHandler:
+    '// ”­¶‚µ‚½ƒGƒ‰[‚ğŒÄ‚Ño‚µŒ³‚É“Š‚°‚é
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Err.Raise Err.Number, , Err.Description
+End Sub
+
+
+
+'// ------------------------------------------------------------------
+'  ƒtƒ@ƒCƒ‹“à‚Ìæˆø”N‚ğæ“¾‚·‚é
+'// ------------------------------------------------------------------
+Public Sub GetBusinessYears(ByRef readCsv As Variant, ByRef readYear As Variant, ByRef addData As Variant, _
+                                        ByRef dicExistData As Dictionary, ByRef dicAddData As Dictionary)
+    '// —\Šú‚¹‚ÊƒGƒ‰[ŒŸ’m
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    On Error GoTo ErrorHandler
+    
+    '// •Ï”éŒ¾
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     Dim getYear As String
     Dim yearCount As Long: yearCount = 0
     Dim dicYear As Dictionary
     Set dicYear = CreateObject("Scripting.Dictionary")
     Dim i As Long
+    Erase readYear
     
+    '// readCsv“à‚Ìæˆø”N‚ğ‚·‚×‚Äæ“¾
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
     For i = LBound(readCsv, 2) To UBound(readCsv, 2) Step 1
         getYear = Year(readCsv(sales.“ú•t, i))
         
         If dicYear.Exists(getYear) = False Then
             ReDim Preserve readYear(yearCount)
             
-            dicYear.Add getYear '// æˆø”N‚ğ«‘“o˜^
+            '// æˆø”N‚ğæ“¾
+            'PPPPPPPPPPPPPPPPPPPPPPPPP
+            dicYear.Add getYear
             readYear(yearCount) = getYear '// æˆø”N‚ğ”z—ñ‚ÉŠi”[
             
             yearCount = yearCount + 1
@@ -318,12 +457,11 @@ Public Function IsWorksheetExist(ByRef targetYear As String) As Boolean
 
     '// ‘ÎÛ”N‚ÌƒV[ƒg‚ª‘¶İ‚·‚é‚©Šm”F
     'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Dim shFlag As Boolean: shFlag = False
-    IsWorksheetExist = True
+    IsWorksheetExist = False
         
     For Each ws In ThisWorkbook.Worksheets
         If ws.Name = targetYear Then
-            shFlag = True '// ƒV[ƒg‚ª‘¶İ‚µ‚½‚çƒtƒ‰ƒO‚ğ•ÏX
+            IsWorksheetExist = True '// ƒV[ƒg‚ª‘¶İ‚µ‚½‚çƒtƒ‰ƒO‚ğ•ÏX
         End If
     Next ws
 
@@ -380,202 +518,134 @@ End Sub
 '// ------------------------------------------------------------------
 '  æˆø”N‚ÌŠù‘¶ƒf[ƒ^‚ğæ“¾‚·‚é
 '// ------------------------------------------------------------------
-Public Sub GetTargetYearExistData()
-
-End Sub
-Public Sub AddDataCopy(ByRef myArray As Variant, ByRef AddData As Variant, ByRef cls04 As Cls4_Log, _
-                                    ByRef fatalCheck As Boolean, ByRef errorLog As Variant, ByRef processLog As Variant, ByVal startTime As Double)
+Public Sub GetTargetYearExistData(ByRef dicExistData As Dictionary, ByVal targetYear As String)
     '// —\Šú‚¹‚ÊƒGƒ‰[ŒŸ’m
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     On Error GoTo ErrorHandler
     
-    '// myArray‚Ìæˆø”N‚ğæ“¾‚·‚é
+    '// •Ï”‚ğéŒ¾
     'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Dim readYear() As Variant
-    Call GetTransactionYear(myArray, readYear)
-    
-    '// æ‘ÎÛ‚Ìƒf[ƒ^‚ğæ“¾‚·‚é
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Dim existData As Variant '// ƒV[ƒgî•ñ‚ğ”z—ñ‚ÉŠi”[
+    existData = ThisWorkbook.Worksheets(targetYear).UsedRange
     Dim i As Long
     Dim j As Long
+            
+    Dim items(lastCol) As Variant
+    Dim key As String
     
-    For i = LBound(readYear) To UBound(readYear) Step 1
-        '// Šù‘¶ƒf[ƒ^‚ğ”z—ñ‚ÉŠi”[‚·‚é
-        'PPPPPPPPPPPPPPPPPPPPPPPPP
-        Dim historicalData() As Variant
-        Dim transactionYear As String: transactionYear = readYear(i)
-        Dim dicExistData As Dictionary
-        Set dicExistData = CreateObject("Scripting.Dictionary")
+    '// ‰ß‹ƒf[ƒ^ƒV[ƒg“à‚Ìî•ñ‚ğdictionary‚ÉŠi”[‚·‚é
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    For i = LBound(existData, 1) To UBound(existData, 1) Step 1  '// ÅIs‚Ü‚Åƒ‹[ƒv
+        For j = LBound(existData, 2) To UBound(existData, 2) Step 1  '// ÅI—ñ‚Ü‚Åƒ‹[ƒv
+            items(j) = .Cells(i, j).value
+        Next j
         
-        Call GetHistoricalData(historicalData, fatalCheck, transactionYear, dicExistData)
+        key = Join(items, ",")
         
-        '// myArray“à‚Ìæˆø‘ÎÛ”N‚Ìæˆø‚ªAŠù‘¶ƒf[ƒ^“à‚É‘¶İ‚µ‚È‚¢‚©”»’f‚·‚é
-        Call IsExistsData(cls04, errorLog, processLog, myArray, dicExistData, dicFormalData, transactionYear, totalRecord, startTime)
-        
-    Next i
-
-    
-    '//  ƒf[ƒ^Œ^‚É‘Šˆá‚ª‚È‚¢‚©”»’f‚·‚é
-    '// “¯ˆêƒf[ƒ^‚ª‘¶İ‚µ‚È‚¢‚©”»’f‚·‚é
-EndLabel:
-    '// Œãn––
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Set ws = Nothing
-    Set dicExistData = Nothing
-    Set dicFormalData = Nothing
-    Erase readYear
-    Erase historicalData
-    
-    '// sub‚ğ”²‚¯‚é
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Exit Sub
-
-ErrorHandler:
-    '// ”­¶‚µ‚½ƒGƒ‰[‚ğŒÄ‚Ño‚µŒ³‚É“Š‚°‚é
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Err.Raise Err.Number, , Err.Description
-End Sub
-Public Sub PrepareCheck(ByRef cls04 As Cls4_Log, ByRef errorLog As Variant, ByRef processLog As Variant, ByRef myArray As Variant, _
-                                    ByRef dicFormalData As Dictionary, ByVal startTime As Double)
-    '// —\Šú‚¹‚ÊƒGƒ‰[ŒŸ’m
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    On Error GoTo ErrorHandler
-    
-    '// ƒJƒ‰ƒ€–¼‚Ì‘Šˆá‚ª‚È‚¢‚©”»’f‚·‚é
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Dim i As Long
-    Dim checkColName As String
-    Dim targetContent As String    '// ƒGƒ‰[‘ÎÛ‚ÌƒJƒ‰ƒ€–¼
-    Dim getInfo As Variant           '// ƒJƒ‰ƒ€–¼ / —ñ”Ô† / Œ^ / •K{
-    Dim getFormalColName As String
-    
-    For i = LBound(myArray, 1) To UBound(myArray, 1) Step 1
-        checkColName = myArray(i, LBound(myArray, 2))   '// ‘ÎÛƒJƒ‰ƒ€‚Ìƒ`ƒFƒbƒNƒf[ƒ^‚ğæ“¾
-        getInfo = dicFormalData(i + 1)                               '// ‘ÎÛƒJƒ‰ƒ€‚Ì³‹Kƒf[ƒ^‚ğæ“¾
-        getFormalColName = getInfo(0)
-        
-        If checkColName <> getFormalColName Then
-            targetContent = checkColName
-            GoTo E002 '// ƒJƒ‰ƒ€–¼‚ªˆê’v‚µ‚È‚¢ê‡
+        '// Šù‘¶æˆø‚ğdictionary‚É’Ç‰Á
+        If dicExistData.Exists(key) = False Then
+            dicExistData.Add key
         End If
     Next i
-    
-    '// æˆøƒf[ƒ^‚ª‘¶İ‚·‚é‚©”»’f‚·‚é
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    If UBound(myArray, 2) = 0 Then
-        GoTo E003 '// æˆøƒf[ƒ^‚ª‘¶İ‚µ‚È‚¢ê‡
-    End If
-EndLabel:
-    '// Œãn––
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    
-    '// sub‚ğ”²‚¯‚é
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Exit Sub
-E002: '// ƒJƒ‰ƒ€–¼‚ªˆê’v‚µ‚È‚¢ê‡
-    '// E002ƒGƒ‰[ƒƒO‚ğæ“¾
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Call GetErrorE002(cls04, startTime, targetContent)
-    
-    '// ƒGƒ‰[ƒƒO‚ğ‹L˜^
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Call WriteErrorLog(errorLog, cls04)
-    
-    '// ˆ—ƒƒO‚ğ‹L˜^
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Call WriteProcessLog(processLog, cls04)
-    
-    '// ˆ—‚ğI—¹
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    GoTo EndLabel
-E003: '// æˆøƒf[ƒ^‚ª‘¶İ‚µ‚È‚¢ê‡
-    '// E003ƒGƒ‰[ƒƒO‚ğæ“¾
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Call GetErrorE003(cls04, startTime)
-    
-    '// ƒGƒ‰[ƒƒO‚ğ‹L˜^
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Call WriteErrorLog(errorLog, cls04)
-    
-    '// ˆ—ƒƒO‚ğ‹L˜^
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Call WriteProcessLog(processLog, cls04)
-    
-    '// ˆ—‚ğI—¹‚·‚é
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    GoTo EndLabel
-ErrorHandler:
-    '// ”­¶‚µ‚½ƒGƒ‰[‚ğŒÄ‚Ño‚µŒ³‚É“Š‚°‚é
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Err.Raise Err.Number, , Err.Description
-End Sub
-Public Sub GetHistoricalData(ByRef historicalData As Variant, ByRef fatalCheck As Boolean, ByVal transactionYear As String, ByRef dicExistData As Dictionary)
-    '// —\Šú‚¹‚ÊƒGƒ‰[ŒŸ’m
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    On Error GoTo ErrorHandler
-    
-    '// ‰ß‹ƒf[ƒ^ƒV[ƒg“à‚Ìî•ñ‚ğ”z—ñ‚ÉŠi”[‚·‚é
-    'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Dim ws As Worksheet
-    Set ws = ThisWorkbook.Worksheets(transactionYear)
-    Dim lastRow As Long
-    Dim lastCol As Long
-    Dim i As Long
-    Dim j As Long
-    Dim k As Long: k = 0
-            
-    With ws
-        lastRow = .Cells(Rows.Count, 1).End(xlUp).Row
-        lastCol = .Cells(1, Columns.Count).End(xlToLeft).Column
-        ReDim Preserve historicalData(lastCol - 1, lastRow - 1)
-        Dim items(lastCol - 1) As Variant
-        Dim key As String
-        
-        For i = 1 To lastRow Step 1 '// ÅIs‚Ü‚Åƒ‹[ƒv
-            For j = 1 To lastCol Step 1 '// ÅI—ñ‚Ü‚Åƒ‹[ƒv
-                items(j - 1) = .Cells(i, j).value
-            Next j
-            
-                key = Join(items, ",")
-                
-                '// Šù‘¶æˆø‚ğdictionary‚É’Ç‰Á
-                If dicExistData.Exists(key) = False Then
-                    dicExistData.Add key
-                End If
-        Next i
-    End With
 
     '// sub‚ğ”²‚¯‚é
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     Exit Sub
-    
+
 ErrorHandler:
     '// ”­¶‚µ‚½ƒGƒ‰[‚ğŒÄ‚Ño‚µŒ³‚É“Š‚°‚é
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     Err.Raise Err.Number, , Err.Description
 End Sub
-Public Sub IsExistsData(ByRef cls04 As Cls4_Log, ByRef errorLog As Variant, ByRef processLog As Variant, ByRef myArray As Variant, _
-                                  ByRef dicExistData As Dictionary, ByRef dicFormalData As Dictionary, ByVal targetYear As Long, ByVal totalRecord As Long, ByVal startTime As Double)
+'// ------------------------------------------------------------------
+'  ğŒ‚ğ–‚½‚·sƒf[ƒ^‚ğæ“¾‚·‚é
+'// ------------------------------------------------------------------
+Public Function IsConditionsData(ByRef dicExistData As Dictionary, ByRef dicAddData As Dictionary, _
+                                        ByRef readCsv As Variant, ByVal getYear As String, ByRef addData As Variant) As Boolean
+    '// —\Šú‚¹‚ÊƒGƒ‰[ŒŸ’m
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    On Error GoTo ErrorHandler
+
+    '// •Ï”‚ğéŒ¾
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Dim rowCount As Long
+    Dim colCount As Long
+    Dim getInfo As Variant
+    getInfo = dicFormalData(colCount)
+    Dim items As Variant
+    IsConditionsData = True
+    
+    For rowCount = LBound(readCsv, 2) To UBound(readCsv, 2) Step 1
+        For colCount = LBound(readCsv, 1) To UBound(readCsv, 1) Step 1
+            '// ”z—ñ‚ğÄ’è‹`
+            'PPPPPPPPPPPPPPPPPPPPPPPPP
+            items(i) = readCsv(colCount, rowCount)
+            
+            '// Œ^‚ªˆê’v‚µ‚Ä‚¢‚é‚©”»’f‚·‚é
+            'PPPPPPPPPPPPPPPPPPPPPPPPP
+            If IsExpectedType(readCsv(colCount, rowCount), getInfo(2)) = False Then
+                '// E004
+                IsConditionsData = False
+                Exit For
+            End If
+            
+            '// Šù‘¶ƒf[ƒ^‚Æ‚Ìd•¡‚ğ”»’f‚·‚é
+            'PPPPPPPPPPPPPPPPPPPPPPPPP
+            If CanObtainData(dicExistData, dicAddData, readCsv, items) = False Then
+                '// E005
+                
+                IsConditionsData = False
+                Exit For
+            Else
+                '// ’Ç‰Áƒf[ƒ^‚ğdictionary‚É’Ç‰Á
+            End If
+        Next colCount
+    Next rowCount
+    
+    '// Œãn––
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Erase getInfo
+    Erase items
+
+    '// sub‚ğ”²‚¯‚é
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Exit Function
+
+ErrorHandler:
+    '// ”­¶‚µ‚½ƒGƒ‰[‚ğŒÄ‚Ño‚µŒ³‚É“Š‚°‚é
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Err.Raise Err.Number, , Err.Description
+End Function
+'// ------------------------------------------------------------------
+'  ƒf[ƒ^‚ÌŒ^‚ªˆê’v‚µ‚Ä‚¢‚é‚©”»’f
+'// ------------------------------------------------------------------
+Private Function IsExpectedType(ByVal value As Variant, ByVal expectedType As VbVarType) As Boolean
     '// —\Šú‚¹‚ÊƒGƒ‰[ŒŸ’m
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     On Error GoTo ErrorHandler
     
-    '// ‹¤’ÊƒƒO‚ğ”z—ñ‚ÉˆêŸ‹L˜^
+    IsExpectedType = (VarType(value) = expectedType)
+
+    '// sub‚ğ”²‚¯‚é
     'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Dim commonLogArray(4) As Variant
-    With cls04
-        commonLogArray(0) = .RunDateTime   '// Às“ú
-        commonLogArray(1) = .UserName       '// ÀsÒ
-        commonLogArray(2) = .FolderPath       '// ƒtƒHƒ‹ƒ_ƒpƒX
-        commonLogArray(3) = .FileName         '// ƒtƒ@ƒCƒ‹–¼
-        commonLogArray(4) = totalRecord      '// ƒŒƒR[ƒh”
-    End With
+    Exit Function
+
+ErrorHandler:
+    '// ”­¶‚µ‚½ƒGƒ‰[‚ğŒÄ‚Ño‚µŒ³‚É“Š‚°‚é
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Err.Raise Err.Number, , Err.Description
+End Function
+'// ------------------------------------------------------------------
+'  Šù‘¶ƒf[ƒ^‚Æd•¡‚µ‚Ä‚¢‚È‚¢æˆøƒf[ƒ^‚ğæ“¾‚·‚é
+'// ------------------------------------------------------------------
+Public Function CanObtainData(ByRef dicExistData As Dictionary, ByRef dicAddData As Dictionary, ByRef readCsv As Variant, ByRef items As Variant) As Boolean
+    '// —\Šú‚¹‚ÊƒGƒ‰[ŒŸ’m
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    On Error GoTo ErrorHandler
     
-    '// ‘ÎÛ‚Ìƒf[ƒ^‚ªŠù‘¶ƒf[ƒ^‚É‘¶İ‚µ‚È‚¢‚©”»’f
+    '// ‘ÎÛ‚Ìƒf[ƒ^‚ªæ‚è‚İŠî€‚ğ–‚½‚µ‚Ä‚¢‚é‚©”»’f
     'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Dim dicAddData As Dictionary
-    Set dicAddData = CreateObject("Scripting.Dictionary")
-    Dim items() As Variant
+    CanObtainData = True
     Dim key As String
     Dim getInfo As Variant '// ƒJƒ‰ƒ€–¼ / —ñ”Ô† / Œ^ / •K{
     Dim i As Long
@@ -584,48 +654,23 @@ Public Sub IsExistsData(ByRef cls04 As Cls4_Log, ByRef errorLog As Variant, ByRe
     Dim errorRows As Long: errorRows = 0
     Dim ErrorRow As Long
     Dim errorFlag As Boolean: errorFlag = False
-    
-    For i = LBound(myArray, 2) + 1 To UBound(myArray, 2) Step 1 '// s‚ğƒ‹[ƒv
-        ReDim items(UBound(myArray, 1))
         
-        For j = LBound(myArray, 1) To UBound(myArray, 1) Step 1 '// —ñ‚ğƒ‹[ƒv
-            '// ³‹Kƒf[ƒ^‚ğ’è‹`
-            getInfo = dicFormalData(j + 1)
-            
-            '// ƒf[ƒ^‚ÌŒ^‚ªˆê’v‚µ‚Ä‚¢‚é‚©”»’f
-            If Not IsExpectedType(myArray(j, i), getInfo(2)) Then
-                errorRows = errorRows + 1
-                ErrorRow = i + 1
-                GoTo E004
-            Else
-                items = myArray(j, i)
-            End If
-        Next j
+    key = Join(items, ",")
         
-            key = Join(items, ",")
-                
-            '// Šù‘¶æˆø‚É‘¶İ‚µ‚È‚¢ê‡Adictionary‚É’Ç‰Á
-            If dicExistData.Exists(key) = False Then
-                dicAddData.Add key               '// dictionary‚É’Ç‰Á
-                readRows = readRows + 1     '// “ÇƒŒƒR[ƒh”‚ğXV
-            Else                                    '// Šù‘¶æˆø‚É“¯ˆêƒf[ƒ^‚ª‘¶İ‚·‚éê‡
-                errorRows = errorRows + 1    '// ƒGƒ‰[ƒŒƒR[ƒh”‚ğXV
-                GoTo E005
-            End If
-    Next i
+    '// Šù‘¶æˆø‚É‘¶İ‚µ‚È‚¢ê‡Adictionary‚É’Ç‰Á
+    If dicExistData.Exists(key) = False Then
+        dicAddData.Add key               '// dictionary‚É’Ç‰Á
+    End If
     
     '// sub‚ğ”²‚¯‚é
     'PPPPPPPPPPPPPPPPPPPPPPPPP
-    Exit Sub
-E004: '// ƒf[ƒ^‚ÌŒ^‚ªˆê’v‚µ‚È‚¢ê‡
-
-E005: '// “¯ˆêƒf[ƒ^‚ª‚·‚Å‚É“o˜^‚³‚ê‚Ä‚¢‚éê‡
+    Exit Function
     
 ErrorHandler:
     '// ”­¶‚µ‚½ƒGƒ‰[‚ğŒÄ‚Ño‚µŒ³‚É“Š‚°‚é
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     Err.Raise Err.Number, , Err.Description
-End Sub
-Private Function IsExpectedType(ByVal value As Variant, ByVal expectedType As VbVarType) As Boolean
-    IsExpectedType = (VarType(value) = expectedType)
 End Function
+
+
+
