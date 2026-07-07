@@ -23,8 +23,29 @@ Public Function StartTimer() As Double
     StartTimer = Timer
 End Function
 Public Function ProcessTime(startTime As Double) As Double
-    Dim endTimer As Double
-    endTimer = Timer
+    Dim endTime As Double
+    endTime = Timer
     
     ProcessTime = endTime - startTime
 End Function
+Public Sub ProtectBook(ByVal wb As Workbook, ByVal password As String, ByVal Enabled As Boolean)
+    If Enabled = True Then '//True：保護を設定 / False：解除
+        wb.Protect password
+    Else
+        wb.Unprotect password
+    End If
+    
+    Set wb = Nothing
+End Sub
+Public Sub ProtectSheets(ByVal ws As Worksheet, ByVal password As String, ByVal Enabled As Boolean)
+    With ws
+        If Enabled = True Then '//True：保護を設定 / False：解除
+            .EnableSelection = xlUnlockedCells '// ロックされたセルの選択を禁止する
+            .Protect password
+        Else
+            .Unprotect password
+        End If
+    End With
+    
+    Set ws = Nothing
+End Sub
