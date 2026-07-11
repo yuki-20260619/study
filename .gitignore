@@ -35,4 +35,5 @@ src/answer/
 src/exercises/
 
 # テンプレート
-src/study/FE/template*.md
+src/study/FE/notes/template.md
+src/study/FE/practice/template.md
