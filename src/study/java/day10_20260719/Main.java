@@ -26,15 +26,65 @@ public class Main {
 
         System.out.println();
 
-        //課題３：finally
-        System.out.println("課題３：finally");
+        //課題３：（エラー無）finally
+        System.out.println("課題３：（エラー無）finally");
 
         try {
-            System.out.println("処理開始");
-        } catch (Exception e) {
-            System.out.println("エラー");
+            System.out.println("処理を開始します。");
+
+            int number = Integer.parseInt("200");
+            System.out.println("変換結果：" + number);
+
+        } catch (NumberFormatException e) {
+            System.out.println("変換できません。");
+
         } finally {
-            System.out.println("少量処理");
+            System.out.println("終了処理を実行します。");
+        }
+
+        System.out.println();
+
+        //課題４：（エラー有）finally
+        System.out.println("課題４：（エラー有）finally");
+
+        try {
+            System.out.println("処理を開始します。");
+
+            int number = Integer.parseInt("abc");
+            System.out.println("変換結果：" + number);
+
+        } catch (NumberFormatException e) {
+            System.out.println("変換できません。");
+
+        } finally {
+            System.out.println("終了処理を実行します。");
+        }
+
+        System.out.println();
+
+        //課題５：例外メッセージを表示する
+        System.out.println("課題５：例外メッセージを表示する");
+
+        try {
+            int number = Integer.parseInt("abc");
+        } catch (NumberFormatException e) {
+            System.out.println("エラーが発生しました。");
+            System.out.println(e.getMessage());
+        }
+        System.out.println();
+
+        //課題６：throwsを使って例外を呼び出し元へ渡す
+        System.out.println("課題６：throwsを使って例外を呼び出し元へ渡す");
+
+        try {
+            int number = Converter.convert("500");
+            System.out.println(number);
+
+            number = Converter.convert("abc");
+            System.out.println(number);
+        } catch (NumberFormatException e) {
+            System.out.println("変換できません。");
+            System.out.println(e.getMessage());
         }
 
         System.out.println();
