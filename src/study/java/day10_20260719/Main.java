@@ -88,5 +88,18 @@ public class Main {
         }
 
         System.out.println();
+
+        //課題７：throwを使って自分で例外を発生させる
+        System.out.println("課題７：throwを使って自分で例外を発生させる");
+
+        try {
+            Validator.checkAge(20);
+            Validator.checkAge(-5);
+        } catch (IllegalArgumentException e) {
+            System.out.println("入力エラー");
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println();
     }
 }
