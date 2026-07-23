@@ -21,14 +21,15 @@ public class ProductManager {
         }
     }
 
-    public Product findProductById(int id) {
+    public Product findProductById(int id) throws ProductNotFoundException {
         for (Product product : products) {
             if (product.getId() == id) {
                 return product;
             }
         }
 
-        return null;
+        throw new ProductNotFoundException(
+                "商品ID" + id + " は存在しません。");
     }
 }
 

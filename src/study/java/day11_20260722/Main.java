@@ -30,13 +30,24 @@ public class Main {
         System.out.println();
         System.out.println("商品ID検索");
 
-        Product foundProduct = manager.findProductById(2);
+        // ↓↓ 例外処理作成の為コメントアウト ↓↓
+        //Product foundProduct = manager.findProductById(2);
 
-        if ( foundProduct != null) {
+        //if (foundProduct != null) {
+        //    System.out.println("商品が見つかりました。");
+        //    foundProduct.showInfo();
+        //} else {
+        //    System.out.println("商品が見つかりませんでした。");
+        //}
+        // ↑↑ 例外処理作成の為コメントアウト ↑↑
+
+        try {
+            Product foundProduct = manager.findProductById(9);
+
             System.out.println("商品が見つかりました。");
             foundProduct.showInfo();
-        } else {
-            System.out.println("商品が見つかりませんでした。");
+        } catch (ProductNotFoundException e) {
+            System.out.println(e.getMessage());
         }
     }
 }
