@@ -408,9 +408,51 @@ src/study/java/day10_20260719
 
 ---
 
+### Day11（2026/07/22）
+商品管理システム（コンソールアプリ）
+
+#### 学習内容
+
+* ArrayList
+* Scanner
+* switch
+* ProductManagerクラス
+* ProductNotFoundException
+* 商品一覧表示
+* 商品検索
+* 商品追加
+* 商品削除
+* CRUD（Create・Read・Delete）のうち、Create・Read・Delete を実装
+
+#### 実装した機能
+
+* 商品情報の一覧表示
+* 商品IDによる検索
+* Scannerを利用したコンソール入力
+* メニュー画面の作成
+* 商品の追加
+* 商品の削除
+* 独自例外（ProductNotFoundException）の作成
+* 存在しない商品検索時の例外処理
+
+#### 学んだこと
+
+* 商品管理処理を Main クラスから ProductManager クラスへ分離し、役割ごとにクラスを設計する方法を学んだ。
+* Scanner を利用してユーザー入力を受け取り、switch 文を用いたメニュー形式のコンソールアプリケーションを作成した。
+* また、ProductNotFoundException を作成し、独自例外を利用したエラー処理を実装することで、例外を適切に設計・利用する流れを理解した。
+* ArrayList を利用して商品の追加・検索・削除を実装し、実務でもよく利用される CRUD（Create・Read・Update・Delete）のうち、Create・Read・Delete の基本的な考え方を学んだ。
+* さらに、既に作成した findProductById() を removeProductById() から呼び出すことで、同じ処理を再利用する重要性を理解した。
+
+#### フォルダ
+
+```text
+src/study/java/day11_20260722
+```
+
+---
 ## 今後学習予定
 
-- Day11：簡単なアプリ作成
+- Day12：CSVファイルとの連携
 
 ---
 
