@@ -1,6 +1,7 @@
 package study.java.day11_20260722;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -48,6 +49,48 @@ public class Main {
             foundProduct.showInfo();
         } catch (ProductNotFoundException e) {
             System.out.println(e.getMessage());
+        }
+
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println();
+            System.out.println("===== 商品管理システム =====");
+            System.out.println("1.商品一覧");
+            System.out.println("2.商品検索");
+            System.out.println("3.商品追加");
+            System.out.println("0.終了");
+            System.out.println("選択してください：");
+
+            int menu = scanner.nextInt();
+
+            switch (menu) {
+
+                case 1:
+                    manager.showAllProducts();
+                    break;
+
+                case 2:
+                    System.out.println("検索するIDを入力してください。");
+                    int id = scanner.nextInt();
+
+                    try {
+                        Product product =manager.findProductById(id);
+                        product.showInfo();
+                    } catch (ProductNotFoundException e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                    break;
+
+                case 0:
+                    System.out.println("終了します。");
+                    scanner.close();
+                    return;
+
+                default:
+                    System.out.println("メニュー番号が正しくありません。");
+            }
         }
     }
 }
