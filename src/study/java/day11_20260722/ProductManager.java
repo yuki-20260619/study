@@ -31,5 +31,10 @@ public class ProductManager {
         throw new ProductNotFoundException(
                 "商品ID" + id + " は存在しません。");
     }
+
+    public void removeProductById(int id) throws ProductNotFoundException {
+        Product product = findProductById(id);
+        products.remove(product);
+    }
 }
 

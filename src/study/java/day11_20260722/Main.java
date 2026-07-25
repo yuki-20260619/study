@@ -59,6 +59,7 @@ public class Main {
             System.out.println("1.商品一覧");
             System.out.println("2.商品検索");
             System.out.println("3.商品追加");
+            System.out.println("4.商品削除");
             System.out.println("0.終了");
             System.out.println("選択してください：");
 
@@ -75,8 +76,40 @@ public class Main {
                     int id = scanner.nextInt();
 
                     try {
-                        Product product =manager.findProductById(id);
+                        Product product = manager.findProductById(id);
                         product.showInfo();
+                    } catch (ProductNotFoundException e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                    break;
+
+                case 3:
+                    System.out.print("商品IDを入力してください。");
+                    int newId = scanner.nextInt();
+
+                    scanner.nextLine();
+
+                    System.out.print("商品名を入力してください。");
+                    String newName = scanner.nextLine();
+
+                    System.out.print("価格を入力してください。");
+                    int newPrice = scanner.nextInt();
+
+                    Product newProduct = new Product(newId,newName,newPrice);
+                    manager.addProduct(newProduct);
+
+                    System.out.println("商品を追加しました。");
+                    newProduct.showInfo();
+                    break;
+
+                case 4:
+                    System.out.print("削除する商品IDを入力してください：");
+                    int removeId = scanner.nextInt();
+
+                    try {
+                        manager.removeProductById(removeId);
+                        System.out.println("商品を削除しました。");
                     } catch (ProductNotFoundException e) {
                         System.out.println(e.getMessage());
                     }
