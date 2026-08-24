@@ -75,6 +75,10 @@ Javaの基礎から順番に学習した内容を、Dayごとに記録するデ�
 | 2026/08/23 | Java |  2問   | 2問  |   0問   |  100%   | 実技課題： Java体験編1: Javaをはじめよう chapter 9  |
 | 2026/08/23 | Java |  3問   | 3問  |   0問   |  100%   | ４択課題： Java体験編1: Javaをはじめよう chapter 9  |
 | 2026/08/23 | Java |  2問   | 2問  |   0問   |  100%   | ４択課題： Java体験編1: Javaをはじめよう chapter 10 |
+| 2026/08/24 | Java |  2問   | 2問  |   0問   |  100%   | 実技課題： Java体験編1: Javaをはじめよう chapter 11 |
+| 2026/08/24 | Java |  4問   | 4問  |   0問   |  100%   | ４択課題： Java体験編1: Javaをはじめよう chapter 11 |
+| 2026/08/24 | Java |  2問   | 2問  |   0問   |  100%   | 実技課題： Java体験編1: Javaをはじめよう chapter 12 |
+| 2026/08/24 | Java |  4問   | 4問  |   0問   |  100%   | ４択課題： Java体験編1: Javaをはじめよう chapter 12 |
 
 ---
 
@@ -133,6 +137,24 @@ src/study/java/practice/standardInput/day01_20260822
 
 ```text
 src/study/java/practice/standardInput/day01_20260823
+```
+
+---
+
+#### 2026/08/24
+
+##### 学習内容
+
+- if
+  - 条件と一致している場合に処理を実行する
+  - 条件に合わせて処理を変える
+  - else
+  - else if
+  
+##### フォルダ
+
+```text
+src/study/java/practice/standardInput/day01_20260824
 ```
 
 ---
