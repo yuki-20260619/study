@@ -1,4 +1,4 @@
-package study.java.practice.conditional.day03_20260824;
+package study.java.practice.conditional.day04_20260824;
 
 import java.util.*;
 
