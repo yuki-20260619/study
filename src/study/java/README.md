@@ -105,6 +105,18 @@ Javaの基礎から順番に学習した内容を、Dayごとに記録するデ�
 | 2026/08/26 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編7: 演算子と変数の使い方を学習しよう chapter 4         |
 | 2026/08/26 | Java |  2問   | 2問  |   0問   |  100%   | 実技課題： Java入門編7: 演算子と変数の使い方を学習しよう chapter 5         |
 | 2026/08/26 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編8: new演算子を学習しよう chapter 2                    |
+| 2026/08/26 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編9: ArrayListを学習しよう chapter 1                    |
+| 2026/08/26 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編9: ArrayListを学習しよう chapter 2                    |
+| 2026/08/26 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編9: ArrayListを学習しよう chapter 3                    |
+| 2026/08/26 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編9: ArrayListを学習しよう chapter 4                    |
+| 2026/08/26 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編9: ArrayListを学習しよう chapter 5                    |
+| 2026/08/26 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編9: ArrayListを学習しよう chapter 6                    |
+| 2026/08/26 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編9: ArrayListを学習しよう chapter 7                    |
+| 2026/08/26 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編9: ArrayListを学習しよう chapter 8                    |
+| 2026/08/26 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編9: ArrayListを学習しよう chapter 9                    |
+| 2026/08/26 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編9: ArrayListを学習しよう chapter 10                   |
+| 2026/08/26 | Java |  2問   | 2問  |   0問   |  100%   | 実技課題： Java入門編9: ArrayListを学習しよう chapter 11                   |
+| 2026/08/26 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編9: ArrayListを学習しよう chapter 12                   |
 
 ---
 
@@ -270,11 +282,23 @@ src/study/java/practice/conditional/day05_20260825
 - インクリメント・デクリメント演算子
 - インスタンス化
 - new演算子
+- ArrayList
+  - 宣言方法
+  - 要素
+    - 追加
+    - 置き換え
+    - 取得
+    - インデックスを取得
+    - 有無を確認
+    - 削除
+    - 並び替え
+    - コピー
+  - 要素数の取得
 
 ##### フォルダ
 
 ```text
-src/study/java/practice/standardInput/day06_20260826
+src/study/java/practice/collection/day06_20260826
 ```
 
 ---
