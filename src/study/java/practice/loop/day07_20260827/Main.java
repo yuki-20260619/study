@@ -33,24 +33,8 @@ public class Main {
         users.forEach(user -> System.out.println(user));
 
         /*
-         ArrayList 型の変数 users が用意されています。
-         コードを追加して、変数 users の全ての要素をひとつずつ大文字に変換して出力してください。
-        */
-        ArrayList<String> users = new ArrayList<>();
-
-        users.add("kirishima");
-        users.add("rokumura");
-        users.add("midorikawa");
-
-        // 下にコードを追加してください
-        users.forEach(user -> {
-            String upperUser = user.toUpperCase();
-            System.out.println(upperUser);
-        });
-
-        /*
          ArrayList 型の変数 users2 が用意されています。
-         コードを追加して、変数 users2 の全ての要素をひとつずつ出力してください。
+         コードを追加して、変数 users2 の全ての要素をひとつずつ大文字に変換して出力してください。
         */
         ArrayList<String> users2 = new ArrayList<>();
 
@@ -59,7 +43,23 @@ public class Main {
         users2.add("midorikawa");
 
         // 下にコードを追加してください
-        for (String user: users2) {
+        users2.forEach(user -> {
+            String upperUser = user.toUpperCase();
+            System.out.println(upperUser);
+        });
+
+        /*
+         ArrayList 型の変数 users3 が用意されています。
+         コードを追加して、変数 users3 の全ての要素をひとつずつ出力してください。
+        */
+        ArrayList<String> users3 = new ArrayList<>();
+
+        users3.add("kirishima");
+        users3.add("rokumura");
+        users3.add("midorikawa");
+
+        // 下にコードを追加してください
+        for (String user: users3) {
             System.out.println(user);
         }
     }
