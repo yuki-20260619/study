@@ -393,6 +393,14 @@ src/study/java/practice/standardInput/day08_20260828
 - while
 - コレクションフレームワーク
   - LinkedHashSet型の変数の宣言及び初期化方法
+  - add
+  - size
+  - contains
+  - remove
+  - clear
+  - isEmpty
+  - forEach
+  - 拡張for文
 
 ##### フォルダ
 
