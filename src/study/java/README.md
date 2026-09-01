@@ -138,7 +138,15 @@ Javaの基礎から順番に学習した内容を、Dayごとに記録するデ�
 | 2026/08/28 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編15: Scannerを使用した標準入力からの値の取得方法について学習しよう chapter 3 |
 | 2026/08/28 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編16: 複数のデータを標準入力から取得しよう chapter 1                          |
 | 2026/08/28 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編16: 複数のデータを標準入力から取得しよう chapter 2                          |
-| 2026/08/28 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編17: while文を学習しよう chapter 1                          |
+| 2026/08/28 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編17: while文を学習しよう chapter 1                                           |
+| 2026/08/29 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編18: コレクションフレームワークを理解しよう（LinkedHashSet） chapter 2       |
+| 2026/08/29 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編18: コレクションフレームワークを理解しよう（LinkedHashSet） chapter 3       |
+| 2026/08/29 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編18: コレクションフレームワークを理解しよう（LinkedHashSet） chapter 4       |
+| 2026/08/29 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編18: コレクションフレームワークを理解しよう（LinkedHashSet） chapter 5       |
+| 2026/08/29 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編18: コレクションフレームワークを理解しよう（LinkedHashSet） chapter 6       |
+| 2026/08/29 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編18: コレクションフレームワークを理解しよう（LinkedHashSet） chapter 7       |
+| 2026/08/29 | Java |  1問   | 1問  |   0問   |  100%   | 実技課題： Java入門編18: コレクションフレームワークを理解しよう（LinkedHashSet） chapter 8       |
+| 2026/08/29 | Java |  2問   | 2問  |   0問   |  100%   | 実技課題： Java入門編18: コレクションフレームワークを理解しよう（LinkedHashSet） chapter 9       |
 
 ---
 
@@ -406,6 +414,25 @@ src/study/java/practice/standardInput/day08_20260828
 
 ```text
 src/study/java/practice/loop/day09_20260829
+src/study/java/practice/collection/day09_20260829
+```
+
+---
+
+#### 2026/08/30
+
+##### 学習内容
+
+- コレクションフレームワーク
+  - LinkedHashMap型の変数の宣言及び初期化方法
+  - put
+  - get
+  - containsKey
+
+##### フォルダ
+
+```text
+src/study/java/practice/collection/day10_20260830
 ```
 
 ---

@@ -47,5 +47,17 @@ public class Main {
         animals.add("lion");
 
         System.out.println(animals.isEmpty());
+
+        /*
+         forEach メソッドを使用して、変数 animals の要素をひとつずつ出力してください。
+        */
+        animals.forEach(animal -> System.out.println(animal));
+
+        /*
+         拡張 for 文を使用して、変数 animals の要素をひとつずつ出力してください。
+        */
+        for (String animal2 : animals) {
+            System.out.println(animal2);
+        }
     }
 }
