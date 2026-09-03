@@ -473,6 +473,32 @@ src/study/java/practice/conditional/day11_20260831
 
 ---
 
+#### 2026/09/01
+
+##### 学習内容
+
+- 参照型とプリミティブ型
+- リテラル
+  - プリミティブ型
+    - ラッパークラス
+  - 文字列型
+  - null型
+  - 整数リテラル
+    - byte
+    - short
+    - int
+    - long
+  - 浮動小数リテラル
+  - booleanリテラル
+
+##### フォルダ
+
+```text
+src/study/java/practice/dataTypes/day12_20260901
+```
+
+---
+
 ## Study
 ### 学習記録
 
