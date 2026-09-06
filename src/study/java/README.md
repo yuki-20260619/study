@@ -595,6 +595,23 @@ src/study/java/practice/objectOriented/day15_20260904
 
 ---
 
+#### 2026/09/05
+
+##### 学習内容
+
+- 変数の型
+- インスタンスのキャスト
+- instanceof演算子
+- objectクラス
+
+##### フォルダ
+
+```text
+src/study/java/practice/objectOriented/day16_20260905
+```
+
+---
+
 ## Study
 ### 学習記録
 
