@@ -67,7 +67,12 @@ public class Main {
         */
         (new Peach()).test();
 
-
+        /*
+         Peach クラスの引数無しのコンストラクタは、スーパークラスのコンストラクタを呼び出すようになっています。引数ありのコンストラクタが、スーパークラスの引数ありのコンストラクタを呼び出すようにコードを追加してください。
+        */
+        Peach p1 = new Peach();
+        System.out.println("---");
+        Peach p2 = new Peach("桃");
     }
 }
 
@@ -113,6 +118,17 @@ class Orange extends Fruits {
 
 class Peach extends Fruits {
     public String japanese1 = "桃";
+
+    public Peach(){
+        super();
+        System.out.println("Peach()");
+    }
+
+    public Peach(String a){
+        //コードを追加
+        super(a);
+        System.out.println("Peach(引数あり)");
+    }
 
     public void season(){
         System.out.println("summer");
