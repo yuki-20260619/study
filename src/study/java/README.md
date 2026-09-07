@@ -603,6 +603,9 @@ src/study/java/practice/objectOriented/day15_20260904
 - インスタンスのキャスト
 - instanceof演算子
 - objectクラス
+- this
+- super
+- 継承時のコンストラクタ
 
 ##### フォルダ
 
