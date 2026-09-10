@@ -676,6 +676,79 @@ src/study/java/practice/classes/day18_20260907
 
 ---
 
+#### 2026/09/08
+
+##### 学習内容
+
+- 例外とは
+  - エラーの中でもプログラム実行時に発生する問題
+  - インスタンスとして扱われる。<br>
+    クラス名には末尾に「Exception」がつくのが一般的
+  - 例外処理
+    - 例外が発生する可能性がある時にあらかじめ記述する処理
+  - スタックトレース
+    - メソッドの呼び出し状況についての情報
+  - 例外の継承関係
+  ``` mermaid
+  classDiagram
+
+    class Throwable {
+    例外・エラー階層の最上位クラス
+    }
+    
+    class Error {
+    システム的に異常な状態
+    }
+    
+    class Exception {
+    アプリケーション側で対処される可能性のある例外
+    }
+    
+    class OutOfMemoryError
+    
+    class RuntimeException {
+    ロジック上の問題
+    }
+    
+    class IOException
+    
+    class NullPointerException
+    
+    Throwable <|-- Error
+    Throwable <|-- Exception
+    
+    Error <|-- OutOfMemoryError
+    
+    Exception <|-- RuntimeException
+    Exception <|-- IOException
+    
+    RuntimeException <|-- NullPointerException
+    
+    classDef unchecked fill:#238B45,stroke:#176B34,color:#ffffff
+    classDef checked fill:#F4511E,stroke:#C63C14,color:#ffffff
+    classDef normal fill:#E0E0E0,stroke:#BDBDBD,color:#333333
+    
+    class Error,OutOfMemoryError,RuntimeException,NullPointerException unchecked
+    class IOException checked
+    class Throwable,Exception normal
+
+```
+    
+  ```
+- エラーの種類
+  - コンパイルエラー
+    - 構文の間違いなどにより、コンパイラによる変換処理を続けられなくなった
+  - 実行時エラー / ランタイムエラー
+    - プログラム実行時に問題があり、処理を中断せざるをえない際に発生させる 
+
+##### フォルダ
+
+```text
+src/study/java/practice/exceptions/day19_20260908
+```
+
+---
+
 ## Study
 ### 学習記録
 
