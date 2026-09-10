@@ -693,7 +693,7 @@ src/study/java/practice/classes/day18_20260907
   classDiagram
 
     class Throwable {
-    例外・エラー階層の最上位クラス
+    すべての例外のスーパークラス
     }
     
     class Error {
@@ -705,13 +705,11 @@ src/study/java/practice/classes/day18_20260907
     }
     
     class OutOfMemoryError
-    
     class RuntimeException {
     ロジック上の問題
     }
     
     class IOException
-    
     class NullPointerException
     
     Throwable <|-- Error
@@ -723,14 +721,6 @@ src/study/java/practice/classes/day18_20260907
     Exception <|-- IOException
     
     RuntimeException <|-- NullPointerException
-    
-    classDef unchecked fill:#238B45,stroke:#176B34,color:#ffffff
-    classDef checked fill:#F4511E,stroke:#C63C14,color:#ffffff
-    classDef normal fill:#E0E0E0,stroke:#BDBDBD,color:#333333
-    
-    class Error,OutOfMemoryError,RuntimeException,NullPointerException unchecked
-    class IOException checked
-    class Throwable,Exception normal
 
 ```
     
