@@ -785,6 +785,22 @@ src/study/java/practice/exceptions/day20_20260909
 
 ---
 
+#### 2026/09/10
+
+##### 学習内容
+
+- var
+  - 利用方法
+  - 利用できる場合とできない場合
+
+##### フォルダ
+
+```text
+src/study/java/practice/dataTypes/day21_20260910
+```
+
+---
+
 ## Study
 ### 学習記録
 
