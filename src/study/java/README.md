@@ -792,6 +792,7 @@ src/study/java/practice/exceptions/day20_20260909
 - var
   - 利用方法
   - 利用できる場合とできない場合
+  - 配列とは
 
 ##### フォルダ
 
