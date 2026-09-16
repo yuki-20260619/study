@@ -792,17 +792,35 @@ src/study/java/practice/exceptions/day20_20260909
 - var
   - 利用方法
   - 利用できる場合とできない場合
-  - 配列とは
-  - 配列の宣言方法
-  - 配列作成式
-  - 配列初期化子
-  - 配列の要素へのアクセス
-  - 配列の要素の置き換え
+  - 配列
+    - 配列とは
+    - 宣言方法
+    - 作成式
+    - 初期化子
+    - 要素へのアクセス
+    - 要素の置き換え
+    - 長さ(length)
 
 ##### フォルダ
 
 ```text
-src/study/java/practice/dataTypes/day21_20260910
+src/study/java/practice/arrays/day21_20260910
+```
+
+---
+
+#### 2026/09/10
+
+##### 学習内容
+
+  - 配列
+    - 繰り返し処理
+    - 
+
+##### フォルダ
+
+```text
+src/study/java/practice/arrays/day22_20260911
 ```
 
 ---

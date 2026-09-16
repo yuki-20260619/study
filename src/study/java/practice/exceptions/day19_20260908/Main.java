@@ -5,7 +5,7 @@ import java.nio.file.*;
 import java.nio.charset.*;
 
 public class Main {
-    public static void main (String[] args) {
+    public static void main (String[] args) throws Exception {
         /*
          コードを修正して、例外が発生してもtestと出力するように修正してください。
         */
