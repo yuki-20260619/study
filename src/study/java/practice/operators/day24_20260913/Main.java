@@ -86,6 +86,12 @@ public class Main {
         System.out.println(num3);
         System.out.println(Integer.toBinaryString(num3));
 
+        /*
+         num1変数の値を反転した結果をnum2変数に格納し、num2変数に格納された値が、出力されるようコードを変更してください。
+        */
+        num2 = ~num1;
 
+        System.out.println(num2);
+        System.out.println(Integer.toBinaryString(num2));
     }
 }
