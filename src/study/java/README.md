@@ -933,6 +933,28 @@ src/study/java/practice/objectOriented/day26_20260915
 
 ---
 
+#### 2026/09/16
+
+##### 学習内容
+
+- クラスについてもっと学習しよう
+  - ネストされたクラス（Nested Classes）
+  - 内部クラス（Inner Classes）
+  - ローカルクラス（Local Classes）
+  - 匿名クラス（Anonymous Classes）
+  - スタティックネステッドクラス（Static Nested Classes）
+  - 列挙型（enum）
+  - アノテーション（Annotation Interfaces）
+  - レコードクラス（record）
+
+##### フォルダ
+
+```text
+src/study/java/practice/classes/day27_20260916
+```
+
+---
+
 ## Study
 ### 学習記録
 
