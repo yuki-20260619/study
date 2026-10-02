@@ -41,6 +41,14 @@ public class Main {
 
         Skill.Spell spell3 = skill3.new Spell();
         spell3.learnedSpell();
+
+        /*
+         外側のクラスであるSkillクラス内の変数、nameと同名の変数を内部クラスであるSpellクラスで定義し、learnedメソッドの引数として与える形で呼び出すことで、
+          スキルを覚えた
+          メガライトニングを覚えた
+         となるよう、コードを変更してください。
+        */
+
     }
 }
 
