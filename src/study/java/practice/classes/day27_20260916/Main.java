@@ -48,15 +48,21 @@ public class Main {
           メガライトニングを覚えた
          となるよう、コードを変更してください。
         */
+        Skill skill4 = new Skill();
+        skill4.use2();
 
+        Skill.Spell spell4 = skill4.new Spell();
+        spell4.learnedSpell1();
     }
 }
 
 class Skill {
+    private String name = "スキル";
+
     // Skillクラス の内部クラスを定義
     class Spell {
         private String enemy;
-        private String name = "スキル";
+        private String name = "メガライトニング";
 
         void lightning() {
             System.out.println("ライトニング");
@@ -69,10 +75,27 @@ class Skill {
         void learnedSpell() {
             learned(name);
         }
+        void learnedSpell1() {
+            // Skillクラス の name変数 を使用するコードを記述
+            learned1(Skill.this.name);
+            // Spellクラス の name変数 を使用するコードを記述
+            learned1(name);
+        }
     }
 
     private void learned(String name) {
         System.out.println(name + "を覚えた");
+    }
+
+    private void learned1(String skillname) {
+        System.out.println(skillname + "を覚えた");
+    }
+
+    void learnedSpell() {
+        // Skillクラス の name変数 を使用するコードを記述
+        learned(Skill.this.name);
+        // Spellクラス の name変数 を使用するコードを記述
+        learned(name);
     }
 
     void use() {
@@ -85,5 +108,9 @@ class Skill {
         // Skillクラス の内部クラスである Spellクラス をインスタンス化するコードを記述
         Spell skill = new Spell();
         skill.lightning1(enemy);
+    }
+
+    void use2() {
+        Spell skill = new Spell();
     }
 }
