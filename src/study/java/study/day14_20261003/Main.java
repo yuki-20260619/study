@@ -1,4 +1,5 @@
 package study.java.study.day14_20261003;
+import java.util.*;
 
 public class Main {
     public static void main (String[] args) {
@@ -20,44 +21,38 @@ public class Main {
 
         A くんの勝った数、B くんの勝った数を以下のフォーマットで出力してください。。
          */
-        import java.util.*;
 
+        // 自分の得意な言語で
+        // Let's チャレンジ！！
+        Scanner sc = new Scanner(System.in);
+        int number = sc.nextInt();
+        int countA = 0;
+        int countB = 0;
 
-        public class Main {
-            public static void main(String[] args) {
-                // 自分の得意な言語で
-                // Let's チャレンジ！！
-                Scanner sc = new Scanner(System.in);
-                int number = sc.nextInt();
-                int countA = 0;
-                int countB = 0;
+        for (int i = 0; i < number; i++) {
+            String A = sc.next();
+            String B = sc.next();
 
-                for (int i = 0; i < number; i++) {
-                    String A = sc.next();
-                    String B = sc.next();
+            if (matchResults(A, B) == true) {countA++;}
+            if (matchResults(B, A) == true) {countB++;}
 
-                    if (matchResults(A, B) == true) {countA++;}
-                    if (matchResults(B, A) == true) {countB++;}
-
-                }
-
-                System.out.println(countA);
-                System.out.println(countB);
-
-            }
-
-            static Boolean matchResults(String myself, String partner) {
-                if (myself.equals("g") && partner.equals("c")) {
-                    return true;
-                }
-                if (myself.equals("c") && partner.equals("p")) {
-                    return true;
-                }
-                if (myself.equals("p") && partner.equals("g")) {
-                    return true;
-                }
-                return false;
-            }
         }
+
+        System.out.println(countA);
+        System.out.println(countB);
+
+    }
+
+    static Boolean matchResults(String myself, String partner) {
+        if (myself.equals("g") && partner.equals("c")) {
+            return true;
+        }
+        if (myself.equals("c") && partner.equals("p")) {
+            return true;
+        }
+        if (myself.equals("p") && partner.equals("g")) {
+            return true;
+        }
+        return false;
     }
 }
