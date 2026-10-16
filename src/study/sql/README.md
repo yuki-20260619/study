@@ -65,7 +65,21 @@ SQLの基礎知識や文法を学習し、実際にSQLを記述・実行した�
 ##### フォルダ
 
 ```text
-src/study/sql/practice/paiza/day01_20261013
+src/study/sql/practice/paiza/database_setup/day01_20261013
+```
+
+---
+
+#### 2026/10/16
+
+##### 学習内容
+
+- 使用するデータベースを選択する (USEコマンド)
+
+##### フォルダ
+
+```text
+src/study/sql/practice/paiza/database_setup/day02_20261016
 ```
 
 ---
